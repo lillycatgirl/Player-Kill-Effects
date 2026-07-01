@@ -11,7 +11,7 @@ public class PlayerKillFXClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         WorldRenderEvents.AFTER_ENTITIES.register(OrbitalRenderer::Render);
-        OrbitalRenderer.AddEffect(new Vec3d(0,64,-100));
+        OrbitalRenderer.AddEffect(new Vec3d(0,73,-100));
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
         });
     }
