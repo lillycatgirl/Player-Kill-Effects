@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "playerkillfx",
+  "version": "${version}",
+  "name": "Player Kill Effects",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/playerkillfx/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.lillycatt.playerkillfx.client.PlayerKillFXClient"
+    ],
+    "main": [
+      "com.lillycatt.playerkillfx.PlayerKillFX"
+    ]
+  },
+  "mixins": [
+    "playerkillfx.mixins.json",
+    {
+      "config": "playerkillfx.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
