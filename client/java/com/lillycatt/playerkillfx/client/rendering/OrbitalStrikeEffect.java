@@ -1,14 +1,12 @@
-package com.lillycatt.playerkillfx.client;
+package com.lillycatt.playerkillfx.client.rendering;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.Heightmap;
-import net.minecraft.world.RegistryWorldView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
 
 public class OrbitalStrikeEffect {
     public final Vec3d position;
@@ -51,9 +49,7 @@ public class OrbitalStrikeEffect {
         float duration = 3f;
         float t = ((4 * ageSeconds / duration) % 4) / 3;
         float d = 2.3f;
-        float radius = ((float)Math.min(Math.cbrt(((d * t) - 1.5f) / (d * 4.0f)) * d * t, 0.8d) + 0.38717f) / 1.18717f;
-        return radius;
-
+        return ((float)Math.min(Math.cbrt(((d * t) - 1.5f) / (d * 4.0f)) * d * t, 0.8d) + 0.38717f) / 1.18717f;
     }
 
     public Vec3i getColorFromAgeAndSegment(int segment) {
@@ -66,4 +62,7 @@ public class OrbitalStrikeEffect {
         float t = ((4 * ageSeconds / duration) % 4) / 3;
         return Math.min(Math.min(20f * t * Math.abs(t - 0.45f), 1) * t, 1);
     }
+
+    public static final Identifier TEXTURE =
+            Identifier.of("playerkillfx", "textures/effect/blank.png");
 }
