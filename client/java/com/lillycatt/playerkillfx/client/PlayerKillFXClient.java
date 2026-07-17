@@ -7,6 +7,8 @@ import net.fabricmc.fabric.api.client.rendering.v1.world.WorldRenderEvents;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Heightmap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +17,7 @@ public class PlayerKillFXClient implements ClientModInitializer {
 
     private List<AbstractClientPlayerEntity> deadPlayers = new ArrayList<>();
 
-
+    public static final Logger LOGGER = LoggerFactory.getLogger("PlayerKillFX");
 
     @Override
     public void onInitializeClient() {

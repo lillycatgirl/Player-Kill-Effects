@@ -1,9 +1,11 @@
 package com.lillycatt.playerkillfx.client.rendering;
 
+import com.lillycatt.playerkillfx.client.PlayerKillFXClient;
 import net.fabricmc.fabric.api.client.rendering.v1.world.WorldRenderContext;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 import org.joml.Matrix4f;
@@ -44,8 +46,13 @@ public class OrbitalRenderer {
                     pos.z - camPos.z
             );
 
-            RenderBeam(matrices, consumers, Effect, Effect.getAlphaFromDistanceSquared((float) pos.squaredDistanceTo(camPos)));
-            RenderShockwave(matrices, consumers, Effect);
+            Vec2f pos2D = new Vec2f((float) pos.x, (float) pos.z);
+            Vec2f camPos2D = new Vec2f((float) camPos.x, (float) camPos.z);
+
+            float alphaMultiplier = Effect.getAlphaFromDistanceSquared(pos2D.distanceSquared(camPos2D));
+
+            RenderBeam(matrices, consumers, Effect, alphaMultiplier);
+            RenderShockwave(matrices, consumers, Effect, alphaMultiplier);
 
 
             matrices.pop();
@@ -57,7 +64,7 @@ public class OrbitalRenderer {
         SCHEDULEDREMOVEEFFECTS.clear();
     }
 
-    private static void RenderShockwave(MatrixStack matrices, VertexConsumerProvider consumers, OrbitalStrikeEffect Effect){
+    private static void RenderShockwave(MatrixStack matrices, VertexConsumerProvider consumers, OrbitalStrikeEffect Effect, float alphaMultiplier){
         VertexConsumer vc = consumers.getBuffer(RenderLayers.entityTranslucent(OrbitalStrikeEffect.SHOCKWAVETEXTURE));
         Matrix4f model = matrices.peek().getPositionMatrix();
 
@@ -66,7 +73,7 @@ public class OrbitalRenderer {
         float shockwaveRadiusMax = Effect.ShockwaveRadiusMax();
         for  (int i = 0; i < waves; i++) {
             float shockWaveRadius = Effect.ShockwaveRadiusAtTime(shockwaveRadiusMax, i * 0.3f) * 6;
-            float shockwaveAlpha = Effect.getAlpha() * 0.3f;
+            float shockwaveAlpha = Effect.getAlpha() * 0.3f * alphaMultiplier;
             vc.vertex(model, shockWaveRadius, 0.1f, shockWaveRadius)
                     .color(255,255,255, (int)(255 * shockwaveAlpha))
                     .texture(1, 1)
@@ -101,9 +108,9 @@ public class OrbitalRenderer {
 
         int sides = 24;
         float radius = Effect.getWidthFromAge() * 1.4f;
-        int alpha = (int)(Effect.getAlpha()* alphaMultiplier * 255);
+        int alpha = (int)(Effect.getAlpha() * alphaMultiplier * 255);
 
-        float height = 90f;
+        float height = 190f;
         float base = Effect.getHeightFromAge();
 
         int[][] colors = new int[sides][4];
@@ -115,7 +122,7 @@ public class OrbitalRenderer {
         RenderCylinder(sides, radius, height, vc, model, base, colors, false);
 
         for (int i = 0; i < sides; i++) {
-            colors[i] = new int[] {255, 255, 255, 255};
+            colors[i] = new int[] {255, 255, 255, (int) (255 * alphaMultiplier)};
         }
 
         radius *= 0.95f;
