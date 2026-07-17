@@ -54,7 +54,6 @@ public class OrbitalRenderer {
             RenderBeam(matrices, consumers, Effect, alphaMultiplier);
             RenderShockwave(matrices, consumers, Effect, alphaMultiplier);
 
-
             matrices.pop();
         }
 
@@ -65,7 +64,7 @@ public class OrbitalRenderer {
     }
 
     private static void RenderShockwave(MatrixStack matrices, VertexConsumerProvider consumers, OrbitalStrikeEffect Effect, float alphaMultiplier){
-        VertexConsumer vc = consumers.getBuffer(RenderLayers.entityTranslucent(OrbitalStrikeEffect.SHOCKWAVETEXTURE));
+        VertexConsumer vc = consumers.getBuffer(RenderLayers.entityTranslucent(OrbitalStrikeEffect.PATTERNTEXTURE));
         Matrix4f model = matrices.peek().getPositionMatrix();
 
         // Shockwave thingy

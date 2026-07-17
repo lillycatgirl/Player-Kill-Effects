@@ -58,7 +58,7 @@ public class OrbitalStrikeEffect {
 
     public float getAgeSeconds() {
         if (((System.currentTimeMillis() - startTime) / 1000f) > DURATION) {
-            // OrbitalRenderer.ScheduleRemoveEffect(OrbitalStrikeEffect.this);
+            OrbitalRenderer.ScheduleRemoveEffect(OrbitalStrikeEffect.this);
         }
         return (System.currentTimeMillis() - startTime) / 1000f;
     }

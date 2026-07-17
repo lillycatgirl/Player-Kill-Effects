@@ -26,6 +26,7 @@ public class PlayerKillFXClient implements ClientModInitializer {
             if (client.world == null) return;
 
             for (AbstractClientPlayerEntity player : client.world.getPlayers()) {
+                if (player == client.player) continue;
                 if (player.isDead() && !deadPlayers.contains(player)){
                     deadPlayers.add(player);
                     OrbitalRenderer.AddEffect(new  Vec3d(player.lastX, client.world.getTopY(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (int) player.lastX, (int) player.lastZ) - 1.5f,player.lastZ));
